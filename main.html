@@ -183,7 +183,7 @@
         }
         // TODO: 로딩바가 다 차는 순간 APNG 애니메이션 재생 (파일 전달되면 여기에 연결)
 
-        startRing();
+        if (count < COUNT_MAX) startRing(); // 최대치 도달 시 로딩 게이지도 멈추고 그대로 정지
       });
 
       startRing();
