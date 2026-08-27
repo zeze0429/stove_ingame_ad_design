@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=24" />
+  <link rel="stylesheet" href="css/desktop.css?v=25" />
 </head>
 <body>
   <div class="os-desktop">
@@ -44,7 +44,10 @@
 
       <!-- 인게임광고 영역 (1100 x 90) — 이미지 4장 롤링 + 우측 원형 로딩 게이지 + 카운터 -->
       <div class="ingame-ad-slot" id="ingameAdSlot">
-        <img class="ingame-ad-slot__image" id="ingameAdImage" src="assets/AD/1.png" alt="" />
+        <div class="ingame-ad-slot__viewport">
+          <img class="ingame-ad-slot__image" id="ingameAdImageA" src="assets/AD/1.png" alt="" />
+          <img class="ingame-ad-slot__image ingame-ad-slot__image--below" id="ingameAdImageB" src="assets/AD/2.png" alt="" />
+        </div>
         <div class="ingame-ad-slot__meter">
           <span class="ingame-ad-slot__count" id="ingameAdCount">0</span>
           <div class="ingame-ad-slot__ring-wrap">
@@ -149,7 +152,9 @@
       var animBlobUrl = null;
       fetch(ANIM_SRC).then(function (r) { return r.blob(); }).then(function (b) { animBlob = b; });
 
-      var imgEl = document.getElementById('ingameAdImage');
+      var imgA = document.getElementById('ingameAdImageA');
+      var imgB = document.getElementById('ingameAdImageB');
+      var activeIsA = true; // A가 화면에 보이는 상태로 시작, B는 아래에서 대기
       var ringEl = document.getElementById('ingameAdRing');
       var countEl = document.getElementById('ingameAdCount');
       var animEl = document.querySelector('.ingame-ad-slot__ring-anim');
@@ -158,8 +163,32 @@
       var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
       ringEl.style.strokeDasharray = CIRCUMFERENCE;
 
-      var adIndex = 0;
+      var adIndex = 0; // 현재 활성 엘리먼트에 표시 중인 이미지 인덱스
       var count = 0;
+
+      function slideToNextAd() {
+        var nextIndex = (adIndex + 1) % AD_IMAGES.length;
+        var activeEl = activeIsA ? imgA : imgB;
+        var hiddenEl = activeIsA ? imgB : imgA;
+
+        // hiddenEl에는 이미 nextIndex 이미지가 미리 로드되어 아래에서 대기 중
+        activeEl.classList.add('ingame-ad-slot__image--above');
+        hiddenEl.classList.remove('ingame-ad-slot__image--below');
+
+        adIndex = nextIndex;
+        activeIsA = !activeIsA;
+
+        // 방금 위로 사라진 엘리먼트를 트랜지션 없이 즉시 아래로 되돌리고,
+        // 그 다음 사이클에 쓸 이미지를 미리 로드해둠
+        setTimeout(function () {
+          activeEl.classList.add('ingame-ad-slot__image--no-transition');
+          activeEl.classList.remove('ingame-ad-slot__image--above');
+          activeEl.classList.add('ingame-ad-slot__image--below');
+          activeEl.src = AD_IMAGES[(adIndex + 1) % AD_IMAGES.length];
+          activeEl.getBoundingClientRect(); // 강제 리플로우
+          activeEl.classList.remove('ingame-ad-slot__image--no-transition');
+        }, 650);
+      }
 
       function animateCount(from, to, duration) {
         var start = null;
@@ -186,8 +215,7 @@
       ringEl.addEventListener('transitionend', function (e) {
         if (e.propertyName !== 'stroke-dashoffset') return;
 
-        adIndex = (adIndex + 1) % AD_IMAGES.length;
-        imgEl.src = AD_IMAGES[adIndex];
+        slideToNextAd();
 
         var newCount = Math.min(count + COUNT_STEP, COUNT_MAX);
         if (newCount > count) {

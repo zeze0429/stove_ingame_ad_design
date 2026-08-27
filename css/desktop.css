@@ -116,11 +116,31 @@ html, body {
   overflow: hidden;
   background: #2a2a2a;
 }
+.ingame-ad-slot__viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 .ingame-ad-slot__image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
+  transform: translateY(0);
+  transition: transform 0.6s ease;
+}
+.ingame-ad-slot__image--below {
+  transform: translateY(100%);
+}
+.ingame-ad-slot__image--above {
+  transform: translateY(-100%);
+}
+.ingame-ad-slot__image--no-transition {
+  transition: none;
 }
 .ingame-ad-slot__meter {
   position: absolute;
