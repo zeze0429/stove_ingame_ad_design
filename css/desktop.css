@@ -116,6 +116,15 @@ html, body {
   overflow: hidden;
   background: #2a2a2a;
 }
+.ingame-ad-slot__dim {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
 .ingame-ad-slot__viewport {
   position: relative;
   width: 100%;
