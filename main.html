@@ -137,6 +137,7 @@
     // 인게임광고 슬롯 — 이미지 4장 롤링 + 우측 원형 로딩 게이지 + 카운터
     (function () {
       var AD_IMAGES = ['assets/AD/1.png', 'assets/AD/2.png', 'assets/AD/3.png', 'assets/AD/4.png'];
+      AD_IMAGES.forEach(function (src) { new Image().src = src; }); // 미리 로드 — 교체 시 로딩 공백(검은 배경 노출) 방지
       var CYCLE_MS = 10000; // 이미지 1장당 노출 시간 (임시값 — 확정되면 조정)
       var COUNT_STEP = 500;
       var COUNT_MAX = 2000;
