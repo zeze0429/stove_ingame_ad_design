@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=16" />
+  <link rel="stylesheet" href="css/desktop.css?v=17" />
 </head>
 <body>
   <div class="os-desktop">
@@ -52,7 +52,8 @@
               <circle class="ingame-ad-slot__ring-bg" cx="27" cy="27" r="26" />
               <circle class="ingame-ad-slot__ring-fg" id="ingameAdRing" cx="27" cy="27" r="26" />
             </svg>
-            <img class="ingame-ad-slot__ring-center" src="assets/loading_animate.png" alt="" />
+            <img class="ingame-ad-slot__ring-center" src="assets/loading_img.png" alt="" />
+            <img class="ingame-ad-slot__ring-anim" src="assets/loading_animate.png" alt="" />
           </div>
         </div>
       </div>
@@ -139,10 +140,13 @@
       var CYCLE_MS = 10000; // 이미지 1장당 노출 시간 (임시값 — 확정되면 조정)
       var COUNT_STEP = 500;
       var COUNT_MAX = 2000;
+      var ANIM_REVEAL_MS = 1200; // 로딩 완료 후 APNG 노출 유지 시간 (임시값 — 확정되면 조정)
+      var ANIM_SRC = 'assets/loading_animate.png';
 
       var imgEl = document.getElementById('ingameAdImage');
       var ringEl = document.getElementById('ingameAdRing');
       var countEl = document.getElementById('ingameAdCount');
+      var animEl = document.querySelector('.ingame-ad-slot__ring-anim');
 
       var RADIUS = 26;
       var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -184,9 +188,15 @@
           animateCount(count, newCount, 800);
           count = newCount;
         }
-        // TODO: 로딩바가 다 차는 순간 APNG 애니메이션 재생 (파일 전달되면 여기에 연결)
 
-        if (count < COUNT_MAX) startRing(); // 최대치 도달 시 로딩 게이지도 멈추고 그대로 정지
+        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 (src를 다시 지정해 처음부터 재생)
+        animEl.src = ANIM_SRC + '?t=' + Math.random();
+        animEl.classList.add('is-visible');
+
+        setTimeout(function () {
+          animEl.classList.remove('is-visible');
+          if (count < COUNT_MAX) startRing(); // 최대치 도달 시 로딩 게이지도 멈추고 그대로 정지
+        }, ANIM_REVEAL_MS);
       });
 
       startRing();
