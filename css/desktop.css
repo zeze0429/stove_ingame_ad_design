@@ -182,7 +182,7 @@ html, body {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #4078f2;
+  background: #fff;
   transform: translate(-50%, -50%) scale(0);
   opacity: 0.65;
   animation: ingame-ad-pulse 2.8s linear infinite;
