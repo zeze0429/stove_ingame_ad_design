@@ -5,13 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=2" />
+  <link rel="stylesheet" href="css/desktop.css?v=3" />
 </head>
 <body>
   <div class="os-desktop">
 
     <!-- 게임 창모드 (1280 x 800) — 실제 게임 화면으로 교체 예정 -->
     <div class="os-window">
+      <div class="os-window__titlebar">
+        <div class="os-window__titlebar-left">
+          <span class="os-window__icon"></span>
+          <span class="os-window__title">Teleport Master</span>
+        </div>
+        <div class="os-window__titlebar-btns">
+          <button class="os-window__btn os-window__btn--min" title="최소화">
+            <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0" y="4.5" width="10" height="1" fill="currentColor"/></svg>
+          </button>
+          <button class="os-window__btn os-window__btn--max" title="최대화">
+            <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor"/></svg>
+          </button>
+          <button class="os-window__btn os-window__btn--close" title="닫기">
+            <svg width="10" height="10" viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
       <iframe
         class="os-content os-content--video"
         src="https://www.youtube.com/embed/Z9dd8sKg-Xw?start=25&autoplay=1&mute=1&loop=1&playlist=Z9dd8sKg-Xw&controls=0&modestbranding=1&rel=0&disablekb=1&iv_load_policy=3&fs=0&playsinline=1"

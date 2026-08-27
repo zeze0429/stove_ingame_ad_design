@@ -36,6 +36,57 @@ html, body {
   background: #1f1f1f;
 }
 
+/* ---- 창 상단 상태표시줄(캡션바) — Windows 11 기본 스타일 --------- */
+.os-window__titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  background: #fafafa;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: auto;
+  user-select: none;
+}
+.os-window__titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 10px;
+  min-width: 0;
+}
+.os-window__icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: #d0d0d0;
+  flex: 0 0 auto;
+}
+.os-window__title {
+  color: #1a1a1a;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.os-window__titlebar-btns {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  flex: 0 0 auto;
+}
+.os-window__btn {
+  width: 46px;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+.os-window__btn:hover { background: rgba(0, 0, 0, 0.06); }
+.os-window__btn--close:hover { background: #e81123; color: #fff; }
+
 .os-content {
   width: 1280px;
   height: 800px;
