@@ -36,7 +36,7 @@ html, body {
 /* ---- 창(window) ------------------------------------------- */
 .os-window {
   position: relative;
-  width: 960px;
+  width: 1100px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -95,8 +95,8 @@ html, body {
 .os-window__btn--close:hover { background: #e81123; color: #fff; }
 
 .os-content {
-  width: 960px;
-  height: 540px; /* 영상 원본 비율(1280x720, 16:9)에 맞춤 — 좌우 잘림 없음 */
+  width: 1100px;
+  height: 619px; /* 영상 원본 비율(1280x720, 16:9)에 맞춤 — 좌우 잘림 없음 */
   border: 0;
   display: block;
   background: #1f1f1f;
@@ -107,9 +107,9 @@ html, body {
   object-fit: contain;
 }
 
-/* ---- 인게임광고 슬롯 (960 x 90 띠광고) ------------------------ */
+/* ---- 인게임광고 슬롯 (1100 x 90 띠광고) ------------------------ */
 .ingame-ad-slot {
-  width: 960px;
+  width: 1100px;
   height: 90px;
   border-radius: 8px;
   background: #2a2a2a;
