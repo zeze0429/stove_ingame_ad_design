@@ -176,7 +176,7 @@ html, body {
   stroke-width: 2;
 }
 .ingame-ad-slot__ring-bg {
-  stroke: #000;
+  stroke: transparent;
 }
 .ingame-ad-slot__ring-fg {
   stroke: #4078f2;
