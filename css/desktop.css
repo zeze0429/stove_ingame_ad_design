@@ -153,14 +153,14 @@ html, body {
   height: 54px;
   padding: 0 0 0 20px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.4);
 }
 .ingame-ad-slot__message {
   color: #fff;
   font-family: "Segoe UI", system-ui, sans-serif;
   font-size: 12px;
   line-height: 1.4;
-  text-align: left;
+  text-align: center;
 }
 .ingame-ad-slot__message strong {
   color: #fff;
@@ -215,7 +215,7 @@ html, body {
   stroke: transparent;
 }
 .ingame-ad-slot__ring-fg {
-  stroke: #4078f2;
+  stroke: #fff;
   stroke-linecap: round;
 }
 .ingame-ad-slot__ring-center {
