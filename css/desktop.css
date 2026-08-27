@@ -180,6 +180,7 @@ html, body {
   width: auto;
   display: block;
   opacity: 0; /* 로딩 중엔 숨김 — 로딩 한 사이클이 끝나는 순간에만 노출 */
+  transition: opacity 0.4s ease;
 }
 .ingame-ad-slot__ring-anim.is-visible {
   opacity: 1;
