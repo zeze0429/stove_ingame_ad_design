@@ -96,7 +96,8 @@ html, body {
 }
 
 .os-content--video {
-  pointer-events: none; /* 유튜브 플레이어 UI/클릭 완전 차단 — 순수 화면처럼만 보여야 함 */
+  pointer-events: none; /* 클릭/우클릭 메뉴 등 인터랙션 완전 차단 — 순수 화면처럼만 보여야 함 */
+  object-fit: cover;
 }
 
 /* ---- 작업표시줄 -----------------------------------------------
