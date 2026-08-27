@@ -161,6 +161,7 @@ html, body {
 .os-taskbar__btn svg { width: 20px; height: 20px; display: block; }
 .os-taskbar__btn:hover { background: rgba(255, 255, 255, 0.1); }
 .os-taskbar__btn.is-active { background: rgba(255, 255, 255, 0.15); border-color: transparent; }
+.os-taskbar__btn--game { margin-left: 10px; }
 
 .os-taskbar__indicator {
   position: absolute;
@@ -173,12 +174,12 @@ html, body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.35);
 }
 .os-taskbar__indicator--active {
   width: 16px;
   height: 3px;
-  background: #4cc2ff;
+  background: #fff;
 }
 
 .os-taskbar__divider {
