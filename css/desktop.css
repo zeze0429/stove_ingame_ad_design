@@ -125,36 +125,52 @@ html, body {
 .ingame-ad-slot__meter {
   position: absolute;
   top: 50%;
-  right: 16px;
+  right: 40px;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 .ingame-ad-slot__count {
-  color: #fff;
+  color: #4078f2;
   font-family: "Segoe UI", system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 19px;
   font-weight: 700;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   min-width: 34px;
   text-align: right;
 }
-.ingame-ad-slot__ring {
-  transform: rotate(-90deg); /* 12시 방향에서 시작 */
+.ingame-ad-slot__ring-wrap {
+  position: relative;
+  width: 54px;
+  height: 54px;
   flex: 0 0 auto;
+}
+.ingame-ad-slot__ring {
+  width: 54px;
+  height: 54px;
+  transform: rotate(-90deg); /* 12시 방향에서 시작 */
 }
 .ingame-ad-slot__ring-bg,
 .ingame-ad-slot__ring-fg {
   fill: none;
-  stroke-width: 3;
+  stroke-width: 2;
 }
 .ingame-ad-slot__ring-bg {
-  stroke: rgba(255, 255, 255, 0.25);
+  stroke: #000;
 }
 .ingame-ad-slot__ring-fg {
-  stroke: #fff;
+  stroke: #4078f2;
   stroke-linecap: round;
+}
+.ingame-ad-slot__ring-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fff;
 }
 
 /* ---- 작업표시줄 -----------------------------------------------

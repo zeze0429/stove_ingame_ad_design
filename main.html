@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=13" />
+  <link rel="stylesheet" href="css/desktop.css?v=14" />
 </head>
 <body>
   <div class="os-desktop">
@@ -47,10 +47,13 @@
         <img class="ingame-ad-slot__image" id="ingameAdImage" src="assets/AD/1.png" alt="" />
         <div class="ingame-ad-slot__meter">
           <span class="ingame-ad-slot__count" id="ingameAdCount">0</span>
-          <svg class="ingame-ad-slot__ring" viewBox="0 0 36 36" width="36" height="36">
-            <circle class="ingame-ad-slot__ring-bg" cx="18" cy="18" r="15" />
-            <circle class="ingame-ad-slot__ring-fg" id="ingameAdRing" cx="18" cy="18" r="15" />
-          </svg>
+          <div class="ingame-ad-slot__ring-wrap">
+            <svg class="ingame-ad-slot__ring" viewBox="0 0 54 54">
+              <circle class="ingame-ad-slot__ring-bg" cx="27" cy="27" r="26" />
+              <circle class="ingame-ad-slot__ring-fg" id="ingameAdRing" cx="27" cy="27" r="26" />
+            </svg>
+            <div class="ingame-ad-slot__ring-center"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -141,7 +144,7 @@
       var ringEl = document.getElementById('ingameAdRing');
       var countEl = document.getElementById('ingameAdCount');
 
-      var RADIUS = 15;
+      var RADIUS = 26;
       var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
       ringEl.style.strokeDasharray = CIRCUMFERENCE;
 
