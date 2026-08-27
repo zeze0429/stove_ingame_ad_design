@@ -29,7 +29,7 @@ html, body {
 /* ---- 창(window) ------------------------------------------- */
 .os-window {
   position: relative;
-  width: 1280px;
+  width: 960px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -88,8 +88,8 @@ html, body {
 .os-window__btn--close:hover { background: #e81123; color: #fff; }
 
 .os-content {
-  width: 1280px;
-  height: 800px;
+  width: 960px;
+  height: 540px; /* 영상 원본 비율(1280x720, 16:9)에 맞춤 — 좌우 잘림 없음 */
   border: 0;
   display: block;
   background: #1f1f1f;
@@ -97,7 +97,7 @@ html, body {
 
 .os-content--video {
   pointer-events: none; /* 클릭/우클릭 메뉴 등 인터랙션 완전 차단 — 순수 화면처럼만 보여야 함 */
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* ---- 작업표시줄 -----------------------------------------------
