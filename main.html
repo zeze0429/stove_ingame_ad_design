@@ -143,6 +143,7 @@
       var COUNT_MAX = 2000;
       var ANIM_REVEAL_MS = 2500; // 로딩 완료 후 APNG 노출 유지 시간 (임시값 — 확정되면 조정)
       var ANIM_SRC = 'assets/loading_animate.png';
+      new Image().src = ANIM_SRC; // 미리 로드 — 재생 시 네트워크 재요청 없이 캐시에서 즉시 재시작되게 함
 
       var imgEl = document.getElementById('ingameAdImage');
       var ringEl = document.getElementById('ingameAdRing');
@@ -190,8 +191,11 @@
           count = newCount;
         }
 
-        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 (src를 다시 지정해 처음부터 재생)
-        animEl.src = ANIM_SRC + '?t=' + Math.random();
+        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 — src를 잠깐 비웠다가 다시 넣어서
+        // (캐시된 파일이라 네트워크 재요청 없이) 처음 프레임부터 재생되게 함
+        animEl.src = '';
+        animEl.getBoundingClientRect(); // 강제 리플로우
+        animEl.src = ANIM_SRC;
         animEl.classList.add('is-visible');
 
         setTimeout(function () {
