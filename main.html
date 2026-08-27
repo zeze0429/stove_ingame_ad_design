@@ -190,8 +190,13 @@
           count = newCount;
         }
 
-        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 (src를 다시 지정해 처음부터 재생)
-        animEl.src = ANIM_SRC + '?t=' + Math.random();
+        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 — 엘리먼트를 통째로 교체(clone)해서
+        // 이전 사이클의 마지막 프레임이 잠깐 비치지 않고 캐시된 파일로 바로 첫 프레임부터 재생되게 함
+        var freshAnim = animEl.cloneNode(true);
+        freshAnim.classList.remove('is-visible');
+        animEl.parentNode.replaceChild(freshAnim, animEl);
+        animEl = freshAnim;
+        animEl.getBoundingClientRect(); // 강제 리플로우 — opacity:0 상태가 먼저 반영되게 함
         animEl.classList.add('is-visible');
 
         setTimeout(function () {
