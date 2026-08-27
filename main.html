@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=35" />
+  <link rel="stylesheet" href="css/desktop.css?v=36" />
 </head>
 <body>
   <div class="os-desktop">
@@ -48,9 +48,9 @@
           <img class="ingame-ad-slot__image" id="ingameAdImageA" src="assets/AD/1.png?v=4" alt="" />
           <img class="ingame-ad-slot__image ingame-ad-slot__image--below" id="ingameAdImageB" src="assets/AD/2.png?v=4" alt="" />
         </div>
-        <div class="ingame-ad-slot__dim"></div>
         <div class="ingame-ad-slot__meter">
-          <span class="ingame-ad-slot__count" id="ingameAdCount">0</span>
+          <span class="ingame-ad-slot__message" id="ingameAdMessage">광고보고<br><strong>500플레이크</strong><br>받기</span>
+          <span class="ingame-ad-slot__count" id="ingameAdCount" style="display: none;"></span>
           <div class="ingame-ad-slot__ring-wrap">
             <span class="ingame-ad-slot__pulse"></span>
             <span class="ingame-ad-slot__pulse ingame-ad-slot__pulse--delay"></span>
@@ -158,6 +158,7 @@
       var activeIsA = true; // A가 화면에 보이는 상태로 시작, B는 아래에서 대기
       var ringEl = document.getElementById('ingameAdRing');
       var countEl = document.getElementById('ingameAdCount');
+      var messageEl = document.getElementById('ingameAdMessage');
       var animEl = document.querySelector('.ingame-ad-slot__ring-anim');
 
       var RADIUS = 26;
@@ -228,6 +229,10 @@
         }
 
         if (newCount > count) {
+          if (count === 0) {
+            messageEl.style.display = 'none';
+            countEl.style.display = '';
+          }
           animateCount(count, newCount, 800);
           count = newCount;
         }
