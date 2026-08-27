@@ -45,8 +45,8 @@
       <!-- 인게임광고 영역 (1100 x 90) — 이미지 4장 롤링 + 우측 원형 로딩 게이지 + 카운터 -->
       <div class="ingame-ad-slot" id="ingameAdSlot">
         <div class="ingame-ad-slot__viewport">
-          <img class="ingame-ad-slot__image" id="ingameAdImageA" src="assets/AD/1.png?v=3" alt="" />
-          <img class="ingame-ad-slot__image ingame-ad-slot__image--below" id="ingameAdImageB" src="assets/AD/2.png?v=3" alt="" />
+          <img class="ingame-ad-slot__image" id="ingameAdImageA" src="assets/AD/1.png?v=4" alt="" />
+          <img class="ingame-ad-slot__image ingame-ad-slot__image--below" id="ingameAdImageB" src="assets/AD/2.png?v=4" alt="" />
         </div>
         <div class="ingame-ad-slot__dim"></div>
         <div class="ingame-ad-slot__meter">
@@ -142,7 +142,7 @@
   <script>
     // 인게임광고 슬롯 — 이미지 4장 롤링 + 우측 원형 로딩 게이지 + 카운터
     (function () {
-      var AD_IMAGES = ['assets/AD/1.png?v=3', 'assets/AD/2.png?v=3', 'assets/AD/3.png?v=3', 'assets/AD/4.png?v=3'];
+      var AD_IMAGES = ['assets/AD/1.png?v=4', 'assets/AD/2.png?v=4', 'assets/AD/3.png?v=4', 'assets/AD/4.png?v=4'];
       AD_IMAGES.forEach(function (src) { new Image().src = src; }); // 미리 로드 — 교체 시 로딩 공백(검은 배경 노출) 방지
       var CYCLE_MS = 12000; // 이미지 1장당 노출 시간 (임시값 — 확정되면 조정)
       var COUNT_STEP = 500;
