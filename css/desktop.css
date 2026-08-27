@@ -167,8 +167,8 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 46px;
-  height: 46px;
+  height: 54px; /* 로딩바(링)와 높이 기준 정렬 — 너비는 원본 비율대로 자동, 추후 사이즈 확정되면 조정 */
+  width: auto;
   display: block;
 }
 
