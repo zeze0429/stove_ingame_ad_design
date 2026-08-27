@@ -141,7 +141,7 @@
       var CYCLE_MS = 10000; // 이미지 1장당 노출 시간 (임시값 — 확정되면 조정)
       var COUNT_STEP = 500;
       var COUNT_MAX = 2000;
-      var ANIM_REVEAL_MS = 2500; // 로딩 완료 후 APNG 노출 유지 시간 (임시값 — 확정되면 조정)
+      var ANIM_REVEAL_MS = 1375; // APNG 실제 재생 시간(33프레임 × 24fps = 1.375s)에 정확히 맞춤 — 재생 종료 즉시 페이드아웃 시작
       var ANIM_SRC = 'assets/loading_animate.png';
       new Image().src = ANIM_SRC; // 미리 로드 — 재생 시 네트워크 재요청 없이 캐시에서 즉시 재시작되게 함
 
