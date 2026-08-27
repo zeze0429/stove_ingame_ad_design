@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=26" />
+  <link rel="stylesheet" href="css/desktop.css?v=27" />
 </head>
 <body>
   <div class="os-desktop">
@@ -215,9 +215,11 @@
       ringEl.addEventListener('transitionend', function (e) {
         if (e.propertyName !== 'stroke-dashoffset') return;
 
-        slideToNextAd();
-
         var newCount = Math.min(count + COUNT_STEP, COUNT_MAX);
+        var isFinalCycle = newCount === COUNT_MAX;
+
+        if (!isFinalCycle) slideToNextAd(); // 마지막 사이클엔 넘기지 않고 4번째 이미지에 고정
+
         if (newCount > count) {
           animateCount(count, newCount, 800);
           count = newCount;
@@ -235,7 +237,11 @@
 
         setTimeout(function () {
           animEl.classList.remove('is-visible');
-          if (count < COUNT_MAX) startRing(); // 최대치 도달 시 로딩 게이지도 멈추고 그대로 정지
+          if (count < COUNT_MAX) {
+            startRing();
+          } else {
+            document.querySelector('.ingame-ad-slot__ring-wrap').classList.add('is-done'); // 파장도 함께 정지
+          }
         }, ANIM_REVEAL_MS);
       });
 
