@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=12" />
+  <link rel="stylesheet" href="css/desktop.css?v=13" />
 </head>
 <body>
   <div class="os-desktop">
@@ -42,8 +42,17 @@
         ></video>
       </div>
 
-      <!-- 인게임광고 영역 (960 x 90) -->
-      <div class="ingame-ad-slot">인게임광고 영역</div>
+      <!-- 인게임광고 영역 (1100 x 90) — 이미지 4장 롤링 + 우측 원형 로딩 게이지 + 카운터 -->
+      <div class="ingame-ad-slot" id="ingameAdSlot">
+        <img class="ingame-ad-slot__image" id="ingameAdImage" src="assets/AD/1.png" alt="" />
+        <div class="ingame-ad-slot__meter">
+          <span class="ingame-ad-slot__count" id="ingameAdCount">0</span>
+          <svg class="ingame-ad-slot__ring" viewBox="0 0 36 36" width="36" height="36">
+            <circle class="ingame-ad-slot__ring-bg" cx="18" cy="18" r="15" />
+            <circle class="ingame-ad-slot__ring-fg" id="ingameAdRing" cx="18" cy="18" r="15" />
+          </svg>
+        </div>
+      </div>
     </div>
 
     <!-- 작업표시줄 (PC클라이언트와 동일 — Figma Make 레퍼런스: https://quartz-unique-70171087.figma.site/ 그대로 재현) -->
@@ -118,6 +127,64 @@
     }
     tick();
     setInterval(tick, 1000 * 30);
+  </script>
+
+  <script>
+    // 인게임광고 슬롯 — 이미지 4장 롤링 + 우측 원형 로딩 게이지 + 카운터
+    (function () {
+      var AD_IMAGES = ['assets/AD/1.png', 'assets/AD/2.png', 'assets/AD/3.png', 'assets/AD/4.png'];
+      var CYCLE_MS = 5000; // 이미지 1장당 노출 시간 (임시값 — 확정되면 조정)
+      var COUNT_STEP = 500;
+
+      var imgEl = document.getElementById('ingameAdImage');
+      var ringEl = document.getElementById('ingameAdRing');
+      var countEl = document.getElementById('ingameAdCount');
+
+      var RADIUS = 15;
+      var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+      ringEl.style.strokeDasharray = CIRCUMFERENCE;
+
+      var adIndex = 0;
+      var count = 0;
+
+      function animateCount(from, to, duration) {
+        var start = null;
+        function step(ts) {
+          if (start === null) start = ts;
+          var progress = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+          countEl.textContent = Math.round(from + (to - from) * eased);
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      function startRing() {
+        ringEl.style.transition = 'none';
+        ringEl.style.strokeDashoffset = CIRCUMFERENCE;
+        ringEl.getBoundingClientRect(); // 강제 리플로우 — transition 재적용 전에 리셋 반영
+        ringEl.style.transition = 'stroke-dashoffset ' + CYCLE_MS + 'ms linear';
+        requestAnimationFrame(function () {
+          ringEl.style.strokeDashoffset = 0;
+        });
+      }
+
+      ringEl.addEventListener('transitionend', function (e) {
+        if (e.propertyName !== 'stroke-dashoffset') return;
+
+        adIndex = (adIndex + 1) % AD_IMAGES.length;
+        imgEl.src = AD_IMAGES[adIndex];
+
+        var newCount = count + COUNT_STEP;
+        animateCount(count, newCount, 800);
+        count = newCount;
+        // TODO: 로딩바가 다 차는 순간 APNG 애니메이션 재생 (파일 전달되면 여기에 연결)
+
+        startRing();
+      });
+
+      startRing();
+    })();
   </script>
 </body>
 </html>
