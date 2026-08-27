@@ -44,12 +44,8 @@ html, body {
   background: #1f1f1f;
 }
 
-.os-content--placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 16px;
+.os-content--video {
+  pointer-events: none; /* 유튜브 플레이어 UI/클릭 완전 차단 — 순수 화면처럼만 보여야 함 */
 }
 
 /* ---- 작업표시줄 -----------------------------------------------
