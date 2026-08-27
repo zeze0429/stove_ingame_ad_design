@@ -5,40 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=5" />
+  <link rel="stylesheet" href="css/desktop.css?v=6" />
 </head>
 <body>
   <div class="os-desktop">
 
-    <!-- 게임 창모드 (1280 x 800) — 실제 게임 화면으로 교체 예정 -->
-    <div class="os-window">
-      <div class="os-window__titlebar">
-        <div class="os-window__titlebar-left">
-          <span class="os-window__icon"></span>
-          <span class="os-window__title">Teleport Master</span>
+    <div class="os-window-group">
+      <!-- 게임 창모드 (960 x 540) -->
+      <div class="os-window">
+        <div class="os-window__titlebar">
+          <div class="os-window__titlebar-left">
+            <span class="os-window__icon"></span>
+            <span class="os-window__title">Teleport Master</span>
+          </div>
+          <div class="os-window__titlebar-btns">
+            <button class="os-window__btn os-window__btn--min" title="최소화">
+              <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0" y="4.5" width="10" height="1" fill="currentColor"/></svg>
+            </button>
+            <button class="os-window__btn os-window__btn--max" title="최대화">
+              <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor"/></svg>
+            </button>
+            <button class="os-window__btn os-window__btn--close" title="닫기">
+              <svg width="10" height="10" viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor"/></svg>
+            </button>
+          </div>
         </div>
-        <div class="os-window__titlebar-btns">
-          <button class="os-window__btn os-window__btn--min" title="최소화">
-            <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0" y="4.5" width="10" height="1" fill="currentColor"/></svg>
-          </button>
-          <button class="os-window__btn os-window__btn--max" title="최대화">
-            <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor"/></svg>
-          </button>
-          <button class="os-window__btn os-window__btn--close" title="닫기">
-            <svg width="10" height="10" viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor"/></svg>
-          </button>
-        </div>
+        <video
+          class="os-content os-content--video"
+          src="assets/gameplay.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          disablepictureinpicture
+          disableremoteplayback
+        ></video>
       </div>
-      <video
-        class="os-content os-content--video"
-        src="assets/gameplay.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        disablepictureinpicture
-        disableremoteplayback
-      ></video>
+
+      <!-- 인게임광고 영역 (960 x 90) -->
+      <div class="ingame-ad-slot">인게임광고 영역</div>
     </div>
 
     <!-- 작업표시줄 (PC클라이언트와 동일 — Figma Make 레퍼런스: https://quartz-unique-70171087.figma.site/ 그대로 재현) -->
