@@ -147,15 +147,15 @@ html, body {
   height: 54px;
   border-radius: 50%;
   background: #4078f2;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(0);
   opacity: 0.5;
-  animation: ingame-ad-pulse 2s ease-out infinite;
+  animation: ingame-ad-pulse 3.5s ease-out infinite;
 }
 .ingame-ad-slot__pulse--delay {
-  animation-delay: 1s;
+  animation-delay: 1.75s;
 }
 @keyframes ingame-ad-pulse {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.5; }
   100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
 }
 .ingame-ad-slot__ring-wrap {
