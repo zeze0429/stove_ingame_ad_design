@@ -3,6 +3,21 @@
    ※ 실제 MS 배경화면 파일이 아닌 CSS 근사(Bloom 스타일) 재현.
    ============================================================= */
 
+@font-face {
+  font-family: 'Gmarket Sans';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/GmarketSansMedium.otf") format("opentype");
+}
+@font-face {
+  font-family: 'Gmarket Sans';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/GmarketSansBold.otf") format("opentype");
+}
+
 html, body {
   margin: 0;
   height: 100%;
@@ -157,7 +172,7 @@ html, body {
 }
 .ingame-ad-slot__message {
   color: #fff;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: 'Gmarket Sans', "Segoe UI", system-ui, sans-serif;
   font-size: 12px;
   line-height: 1.4;
   text-align: right;
@@ -167,7 +182,7 @@ html, body {
 }
 .ingame-ad-slot__count {
   color: #fff;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: 'Gmarket Sans', "Segoe UI", system-ui, sans-serif;
   font-size: 18px;
   font-weight: 700;
   width: 60px;
