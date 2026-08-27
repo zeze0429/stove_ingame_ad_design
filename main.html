@@ -197,7 +197,8 @@
           if (start === null) start = ts;
           var progress = Math.min((ts - start) / duration, 1);
           var eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-          countEl.textContent = Math.round(from + (to - from) * eased);
+          var value = Math.round(from + (to - from) * eased);
+          countEl.textContent = value > 0 ? '+' + value : value;
           if (progress < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
