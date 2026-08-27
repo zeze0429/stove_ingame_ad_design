@@ -145,7 +145,9 @@
       var COUNT_MAX = 2000;
       var ANIM_REVEAL_MS = 1375; // APNG 실제 재생 시간(33프레임 × 24fps = 1.375s)에 정확히 맞춤 — 재생 종료 즉시 페이드아웃 시작
       var ANIM_SRC = 'assets/loading_animate.png';
-      new Image().src = ANIM_SRC; // 미리 로드 — 재생 시 네트워크 재요청 없이 캐시에서 즉시 재시작되게 함
+      var animBlob = null;
+      var animBlobUrl = null;
+      fetch(ANIM_SRC).then(function (r) { return r.blob(); }).then(function (b) { animBlob = b; });
 
       var imgEl = document.getElementById('ingameAdImage');
       var ringEl = document.getElementById('ingameAdRing');
@@ -193,11 +195,14 @@
           count = newCount;
         }
 
-        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 — src를 잠깐 비웠다가 다시 넣어서
-        // (캐시된 파일이라 네트워크 재요청 없이) 처음 프레임부터 재생되게 함
-        animEl.src = '';
-        animEl.getBoundingClientRect(); // 강제 리플로우
-        animEl.src = ANIM_SRC;
+        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 — 매번 새 Blob URL을 만들어서 재생시킴.
+        // (같은 URL로 src를 리셋하면 브라우저가 이미 재생 끝난 상태를 그대로 유지해
+        // 마지막 프레임만 보이는 경우가 있었음 — 매번 다른 URL이면 항상 새로 디코드됨)
+        if (animBlob) {
+          if (animBlobUrl) URL.revokeObjectURL(animBlobUrl);
+          animBlobUrl = URL.createObjectURL(animBlob);
+          animEl.src = animBlobUrl;
+        }
         animEl.classList.add('is-visible');
 
         setTimeout(function () {
