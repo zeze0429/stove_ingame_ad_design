@@ -161,7 +161,6 @@ html, body {
 .os-taskbar__btn svg { width: 20px; height: 20px; display: block; }
 .os-taskbar__btn:hover { background: rgba(255, 255, 255, 0.1); }
 .os-taskbar__btn.is-active { background: rgba(255, 255, 255, 0.15); border-color: transparent; }
-.os-taskbar__btn--game { margin-left: 10px; }
 
 .os-taskbar__indicator {
   position: absolute;
