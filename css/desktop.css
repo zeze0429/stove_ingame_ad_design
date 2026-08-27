@@ -145,12 +145,13 @@ html, body {
 .ingame-ad-slot__meter {
   position: absolute;
   top: 50%;
-  right: 40px;
+  right: 0;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 20px;
+  height: 54px;
+  padding: 0 20px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.65);
 }
@@ -162,11 +163,11 @@ html, body {
   text-align: center;
 }
 .ingame-ad-slot__message strong {
-  color: #4078f2;
+  color: #fff;
   font-size: 14px;
 }
 .ingame-ad-slot__count {
-  color: #4078f2;
+  color: #fff;
   font-family: "Segoe UI", system-ui, sans-serif;
   font-size: 19px;
   font-weight: 700;
