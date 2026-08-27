@@ -59,7 +59,8 @@
               <circle class="ingame-ad-slot__ring-fg" id="ingameAdRing" cx="27" cy="27" r="26" />
             </svg>
             <img class="ingame-ad-slot__ring-center" src="assets/loading_img.png" alt="" />
-            <img class="ingame-ad-slot__ring-anim" src="assets/loading_animate.png" alt="" />
+            <img class="ingame-ad-slot__ring-anim" id="ingameAdAnim1" src="assets/loading_animate.png" alt="" />
+            <img class="ingame-ad-slot__ring-anim" id="ingameAdAnim2" src="assets/loading_animate.png" alt="" />
           </div>
         </div>
       </div>
@@ -148,9 +149,9 @@
       var COUNT_STEP = 500;
       var COUNT_MAX = 2000;
       var ANIM_REVEAL_MS = 1375; // APNG 실제 재생 시간(33프레임 × 24fps = 1.375s)에 정확히 맞춤 — 재생 종료 즉시 페이드아웃 시작
+      var ANIM_STAGGER_MS = 250; // 테스트: 같은 APNG를 시간차 두고 두 번 재생
       var ANIM_SRC = 'assets/loading_animate.png';
       var animBlob = null;
-      var animBlobUrl = null;
       fetch(ANIM_SRC).then(function (r) { return r.blob(); }).then(function (b) { animBlob = b; });
 
       var imgA = document.getElementById('ingameAdImageA');
@@ -159,7 +160,27 @@
       var ringEl = document.getElementById('ingameAdRing');
       var countEl = document.getElementById('ingameAdCount');
       var messageEl = document.getElementById('ingameAdMessage');
-      var animEl = document.querySelector('.ingame-ad-slot__ring-anim');
+      var animEl1 = document.getElementById('ingameAdAnim1');
+      var animEl2 = document.getElementById('ingameAdAnim2');
+      var animEl1BlobUrl = null;
+      var animEl2BlobUrl = null;
+
+      // 로딩 완료 시 APNG를 하나 재생 — 매번 새 Blob URL을 만들어서 재생시킴
+      // (같은 URL로 src를 리셋하면 브라우저가 이미 재생 끝난 상태를 그대로 유지해
+      // 마지막 프레임만 보이는 경우가 있었음 — 매번 다른 URL이면 항상 새로 디코드됨)
+      function playAnim(el, getBlobUrl, setBlobUrl) {
+        if (animBlob) {
+          var prevUrl = getBlobUrl();
+          if (prevUrl) URL.revokeObjectURL(prevUrl);
+          var url = URL.createObjectURL(animBlob);
+          setBlobUrl(url);
+          el.src = url;
+        }
+        el.classList.add('is-visible');
+        setTimeout(function () {
+          el.classList.remove('is-visible');
+        }, ANIM_REVEAL_MS);
+      }
 
       var RADIUS = 26;
       var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -237,20 +258,15 @@
           count = newCount;
         }
 
-        // 로딩 한 사이클이 끝나는 순간에만 APNG 노출 — 매번 새 Blob URL을 만들어서 재생시킴.
-        // (같은 URL로 src를 리셋하면 브라우저가 이미 재생 끝난 상태를 그대로 유지해
-        // 마지막 프레임만 보이는 경우가 있었음 — 매번 다른 URL이면 항상 새로 디코드됨)
-        if (animBlob) {
-          if (animBlobUrl) URL.revokeObjectURL(animBlobUrl);
-          animBlobUrl = URL.createObjectURL(animBlob);
-          animEl.src = animBlobUrl;
-        }
-        animEl.classList.add('is-visible');
+        // 테스트: 같은 APNG를 시간차(ANIM_STAGGER_MS) 두고 두 번 재생
+        playAnim(animEl1, function () { return animEl1BlobUrl; }, function (u) { animEl1BlobUrl = u; });
+        setTimeout(function () {
+          playAnim(animEl2, function () { return animEl2BlobUrl; }, function (u) { animEl2BlobUrl = u; });
+        }, ANIM_STAGGER_MS);
 
         setTimeout(function () {
-          animEl.classList.remove('is-visible');
           if (count < COUNT_MAX) startRing();
-        }, ANIM_REVEAL_MS);
+        }, ANIM_STAGGER_MS + ANIM_REVEAL_MS);
       });
 
       startRing();
