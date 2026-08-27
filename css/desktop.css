@@ -183,10 +183,6 @@ html, body {
 .ingame-ad-slot__pulse--delay {
   animation-delay: 1.4s;
 }
-.ingame-ad-slot__ring-wrap.is-done .ingame-ad-slot__pulse {
-  animation-play-state: paused;
-  opacity: 0;
-}
 @keyframes ingame-ad-pulse {
   0% { transform: translate(-50%, -50%) scale(0); opacity: 0.65; }
   50% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; } /* 흰 원~링 사이 여백을 지나가는 구간을 절반 시간 동안 천천히 보여줌 */

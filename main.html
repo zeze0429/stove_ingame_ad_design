@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=30" />
+  <link rel="stylesheet" href="css/desktop.css?v=31" />
 </head>
 <body>
   <div class="os-desktop">
@@ -222,7 +222,8 @@
         if (!isFinalCycle) {
           slideToNextAd(); // 마지막 사이클엔 넘기지 않고 4번째 이미지에 고정
         } else {
-          document.querySelector('.ingame-ad-slot__ring-wrap').classList.add('is-done'); // 로딩 끝나는 즉시 파장 정지
+          // 로딩 끝나는 즉시 파장 엘리먼트를 DOM에서 완전히 제거 (CSS로 숨기는 것보다 확실함)
+          document.querySelectorAll('.ingame-ad-slot__pulse').forEach(function (el) { el.remove(); });
         }
 
         if (newCount > count) {
