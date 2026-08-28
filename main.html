@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=49" />
+  <link rel="stylesheet" href="css/desktop.css?v=50" />
 </head>
 <body>
   <div class="os-desktop">
@@ -64,6 +64,12 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- 프로토타입 데모 컨트롤: 광고 1개/4개 모드 전환 (디자인 스펙 아님) -->
+    <div class="ad-mode-toggle">
+      <button class="ad-mode-toggle__btn" id="adModeSingleBtn" type="button">광고 1개</button>
+      <button class="ad-mode-toggle__btn is-active" id="adModeQuadBtn" type="button">광고 4개</button>
     </div>
 
     <!-- 작업표시줄 (PC클라이언트와 동일 — Figma Make 레퍼런스: https://quartz-unique-70171087.figma.site/ 그대로 재현) -->
@@ -159,6 +165,10 @@
       var imgB = document.getElementById('ingameAdImageB');
       var activeIsA = true; // A가 화면에 보이는 상태로 시작, B는 아래에서 대기
       var ringEl = document.getElementById('ingameAdRing');
+      var ringWrapEl = document.querySelector('.ingame-ad-slot__ring-wrap');
+      var meterEl = document.querySelector('.ingame-ad-slot__meter');
+      var pulseHtml = '<span class="ingame-ad-slot__pulse"></span><span class="ingame-ad-slot__pulse ingame-ad-slot__pulse--delay"></span>';
+      var currentMode = 'quad';
       var countEl = document.getElementById('ingameAdCount');
       var messageEl = document.getElementById('ingameAdMessage');
       var animEl1 = document.getElementById('ingameAdAnim1');
@@ -239,6 +249,7 @@
 
       ringEl.addEventListener('transitionend', function (e) {
         if (e.propertyName !== 'stroke-dashoffset') return;
+        if (currentMode !== 'quad') return; // 광고 1개 모드로 전환된 상태면 무시
 
         var newCount = Math.min(count + COUNT_STEP, COUNT_MAX);
         var isFinalCycle = newCount === COUNT_MAX;
@@ -269,6 +280,61 @@
           if (count < COUNT_MAX) startRing();
         }, ANIM_STAGGER_MS + ANIM_REVEAL_MS);
       });
+
+      function setStatic(el, src) {
+        el.classList.add('ingame-ad-slot__image--no-transition');
+        el.classList.remove('ingame-ad-slot__image--above', 'ingame-ad-slot__image--below');
+        el.src = src;
+        el.getBoundingClientRect();
+        el.classList.remove('ingame-ad-slot__image--no-transition');
+      }
+
+      function enterSingleMode() {
+        if (currentMode === 'single') return;
+        currentMode = 'single';
+
+        setStatic(imgA, AD_IMAGES[0]);
+        imgB.classList.add('ingame-ad-slot__image--no-transition', 'ingame-ad-slot__image--below');
+        imgB.getBoundingClientRect();
+        imgB.classList.remove('ingame-ad-slot__image--no-transition');
+
+        meterEl.style.display = 'none';
+
+        document.getElementById('adModeSingleBtn').classList.add('is-active');
+        document.getElementById('adModeQuadBtn').classList.remove('is-active');
+      }
+
+      function enterQuadMode() {
+        if (currentMode === 'quad') return;
+        currentMode = 'quad';
+
+        adIndex = 0;
+        activeIsA = true;
+        count = 0;
+        setStatic(imgA, AD_IMAGES[0]);
+        imgB.classList.add('ingame-ad-slot__image--no-transition', 'ingame-ad-slot__image--below');
+        imgB.src = AD_IMAGES[1];
+        imgB.getBoundingClientRect();
+        imgB.classList.remove('ingame-ad-slot__image--no-transition');
+
+        messageEl.style.display = '';
+        countEl.style.display = 'none';
+        countEl.textContent = '';
+
+        if (!ringWrapEl.querySelector('.ingame-ad-slot__pulse')) {
+          ringWrapEl.insertAdjacentHTML('afterbegin', pulseHtml);
+        }
+
+        meterEl.style.display = '';
+
+        document.getElementById('adModeQuadBtn').classList.add('is-active');
+        document.getElementById('adModeSingleBtn').classList.remove('is-active');
+
+        startRing();
+      }
+
+      document.getElementById('adModeSingleBtn').addEventListener('click', enterSingleMode);
+      document.getElementById('adModeQuadBtn').addEventListener('click', enterQuadMode);
 
       startRing();
     })();

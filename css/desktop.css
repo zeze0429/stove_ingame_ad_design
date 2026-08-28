@@ -262,6 +262,34 @@ html, body {
 /* ---- 작업표시줄 -----------------------------------------------
    레퍼런스: https://quartz-unique-70171087.figma.site/ 실제 DOM/클래스를
    그대로 옮김 (반투명 화이트 유리효과 + Lucide 라인 아이콘, 전부 흰색) */
+/* ---- 프로토타입 데모 컨트롤 (디자인 스펙 아님) ------------------ */
+.ad-mode-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 64px;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+}
+.ad-mode-toggle__btn {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.ad-mode-toggle__btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+.ad-mode-toggle__btn.is-active {
+  background: #4078f2;
+  color: #fff;
+}
+
 .os-taskbar {
   position: fixed;
   left: 0;
