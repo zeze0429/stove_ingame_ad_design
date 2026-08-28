@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=50" />
+  <link rel="stylesheet" href="css/desktop.css?v=51" />
 </head>
 <body>
   <div class="os-desktop">
@@ -249,13 +249,12 @@
 
       ringEl.addEventListener('transitionend', function (e) {
         if (e.propertyName !== 'stroke-dashoffset') return;
-        if (currentMode !== 'quad') return; // 광고 1개 모드로 전환된 상태면 무시
 
         var newCount = Math.min(count + COUNT_STEP, COUNT_MAX);
         var isFinalCycle = newCount === COUNT_MAX;
 
         if (!isFinalCycle) {
-          slideToNextAd(); // 마지막 사이클엔 넘기지 않고 4번째 이미지에 고정
+          if (currentMode === 'quad') slideToNextAd(); // 광고 1개 모드는 이미지 전환 없이 게이지/카운트만 반복
         } else {
           // 로딩 끝나는 즉시 파장 엘리먼트를 DOM에서 완전히 제거 (CSS로 숨기는 것보다 확실함)
           document.querySelectorAll('.ingame-ad-slot__pulse').forEach(function (el) { el.remove(); });
@@ -293,12 +292,12 @@
         if (currentMode === 'single') return;
         currentMode = 'single';
 
-        setStatic(imgA, AD_IMAGES[0]);
+        setStatic(imgA, AD_IMAGES[2]); // 광고 1개 모드는 3번 이미지 고정
         imgB.classList.add('ingame-ad-slot__image--no-transition', 'ingame-ad-slot__image--below');
         imgB.getBoundingClientRect();
         imgB.classList.remove('ingame-ad-slot__image--no-transition');
 
-        meterEl.style.display = 'none';
+        // 수익화 컴포넌트(로딩 게이지/카운트)는 이미지 개수와 무관하게 계속 동작해야 함 — 숨기지 않음
 
         document.getElementById('adModeSingleBtn').classList.add('is-active');
         document.getElementById('adModeQuadBtn').classList.remove('is-active');
