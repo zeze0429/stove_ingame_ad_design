@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=54" />
+  <link rel="stylesheet" href="css/desktop.css?v=55" />
 </head>
 <body>
   <div class="os-desktop">
@@ -157,7 +157,6 @@
       var ANIM_REVEAL_MS = 1375; // APNG 실제 재생 시간(33프레임 × 24fps = 1.375s)에 정확히 맞춤 — 재생 종료 즉시 페이드아웃 시작
       var ANIM_REVEAL_MS_1 = 900; // 첫 번째(시간차 먼저 나오는) APNG는 더 빨리 페이드아웃
       var ANIM_STAGGER_MS = 200; // 테스트: 같은 APNG를 시간차 두고 두 번 재생
-      var AD_SLIDE_MS = 600; // 광고 슬라이드 전환 시간(css .ingame-ad-slot__image transition과 동일해야 함)
       var ANIM_SRC = 'assets/loading_animate.png';
       var animBlob = null;
       fetch(ANIM_SRC).then(function (r) { return r.blob(); }).then(function (b) { animBlob = b; });
@@ -254,9 +253,7 @@
         var newCount = Math.min(count + COUNT_STEP, COUNT_MAX);
         var isFinalCycle = currentMode === 'single' || newCount === COUNT_MAX; // 광고 1개 모드는 한 바퀴만 돌고 종료
 
-        if (!isFinalCycle) {
-          slideToNextAd(); // (currentMode는 항상 'quad'인 경우에만 이 분기로 옴)
-        } else {
+        if (isFinalCycle) {
           // 로딩 끝나는 즉시 파장 엘리먼트를 DOM에서 완전히 제거 (CSS로 숨기는 것보다 확실함)
           document.querySelectorAll('.ingame-ad-slot__pulse').forEach(function (el) { el.remove(); });
         }
@@ -270,16 +267,17 @@
           count = newCount;
         }
 
-        // 테스트: 같은 APNG를 시간차(ANIM_STAGGER_MS) 두고 두 번 재생
+        // 1) 완료 연출(APNG)을 지금 보이는 광고 위에서 먼저 재생 — 시간차(ANIM_STAGGER_MS) 두고 두 번
         playAnim(animEl1, function () { return animEl1BlobUrl; }, function (u) { animEl1BlobUrl = u; }, ANIM_REVEAL_MS_1);
         setTimeout(function () {
           playAnim(animEl2, function () { return animEl2BlobUrl; }, function (u) { animEl2BlobUrl = u; }, ANIM_REVEAL_MS);
         }, ANIM_STAGGER_MS);
 
-        // 로딩 재시작은 APNG 완료 연출과 무관하게, 새 광고가 완전히 노출되는 시점(슬라이드 전환 종료)에 맞춤
+        // 2) 완료 연출이 다 끝난 뒤에만 광고 전환 + 로딩 재시작 (둘이 같은 시점에 일어남)
         setTimeout(function () {
+          if (!isFinalCycle) slideToNextAd();
           if (currentMode === 'quad' && count < COUNT_MAX) startRing();
-        }, AD_SLIDE_MS);
+        }, ANIM_STAGGER_MS + ANIM_REVEAL_MS);
       });
 
       function setStatic(el, src) {
