@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=51" />
+  <link rel="stylesheet" href="css/desktop.css?v=52" />
 </head>
 <body>
   <div class="os-desktop">
@@ -251,10 +251,10 @@
         if (e.propertyName !== 'stroke-dashoffset') return;
 
         var newCount = Math.min(count + COUNT_STEP, COUNT_MAX);
-        var isFinalCycle = newCount === COUNT_MAX;
+        var isFinalCycle = currentMode === 'single' || newCount === COUNT_MAX; // 광고 1개 모드는 한 바퀴만 돌고 종료
 
         if (!isFinalCycle) {
-          if (currentMode === 'quad') slideToNextAd(); // 광고 1개 모드는 이미지 전환 없이 게이지/카운트만 반복
+          slideToNextAd(); // (currentMode는 항상 'quad'인 경우에만 이 분기로 옴)
         } else {
           // 로딩 끝나는 즉시 파장 엘리먼트를 DOM에서 완전히 제거 (CSS로 숨기는 것보다 확실함)
           document.querySelectorAll('.ingame-ad-slot__pulse').forEach(function (el) { el.remove(); });
@@ -276,7 +276,7 @@
         }, ANIM_STAGGER_MS);
 
         setTimeout(function () {
-          if (count < COUNT_MAX) startRing();
+          if (currentMode === 'quad' && count < COUNT_MAX) startRing();
         }, ANIM_STAGGER_MS + ANIM_REVEAL_MS);
       });
 
