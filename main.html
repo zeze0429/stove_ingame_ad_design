@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STOVE 인게임광고 — 데스크톱 미리보기</title>
   <link rel="stylesheet" href="css/typography.css?v=1" />
-  <link rel="stylesheet" href="css/desktop.css?v=52" />
+  <link rel="stylesheet" href="css/desktop.css?v=53" />
 </head>
 <body>
   <div class="os-desktop">
@@ -289,7 +289,6 @@
       }
 
       function enterSingleMode() {
-        if (currentMode === 'single') return;
         currentMode = 'single';
 
         setStatic(imgA, AD_IMAGES[2]); // 광고 1개 모드는 3번 이미지 고정
@@ -297,10 +296,19 @@
         imgB.getBoundingClientRect();
         imgB.classList.remove('ingame-ad-slot__image--no-transition');
 
-        // 수익화 컴포넌트(로딩 게이지/카운트)는 이미지 개수와 무관하게 계속 동작해야 함 — 숨기지 않음
+        // 버튼 클릭 시점부터 로딩이 처음부터 다시 시작되도록 상태 전체 리셋
+        count = 0;
+        messageEl.style.display = '';
+        countEl.style.display = 'none';
+        countEl.textContent = '';
+        if (!ringWrapEl.querySelector('.ingame-ad-slot__pulse')) {
+          ringWrapEl.insertAdjacentHTML('afterbegin', pulseHtml);
+        }
 
         document.getElementById('adModeSingleBtn').classList.add('is-active');
         document.getElementById('adModeQuadBtn').classList.remove('is-active');
+
+        startRing();
       }
 
       function enterQuadMode() {
